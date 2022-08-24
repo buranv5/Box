@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealthPoint: 100
   DamagePerPunch: 5
-  BlockChance: 0.3333
-  ReviveChance: 0.15
+  PunchDelay: 2
+  BlockChance: 0.33333334
+  ReviveChance: 0.785

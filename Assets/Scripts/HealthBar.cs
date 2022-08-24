@@ -8,7 +8,6 @@ public class HealthBar : MonoBehaviour
     private void Awake()
     {
         bar = GetComponent<Image>();
-        bar.type = Image.Type.Filled;
     }
 
     public void SetFillingAmount(float value)

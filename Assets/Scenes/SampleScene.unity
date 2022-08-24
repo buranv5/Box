@@ -363,14 +363,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 17c3cabca715519488e3bbb78cdf49d0, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!222 &384085917
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -810,7 +810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &808022004
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1493,11 +1493,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: cc7e49c49dd9db64297c6b856844c8cb, type: 3}
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -1636,12 +1636,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damagePerPunch: 10
-  healthPoints: 100
+  maxHealthPoints: 100
   healthBar: {fileID: 384085918}
   target: {fileID: 2054886105}
   leftHandPunchButton: {fileID: 2087750032}
   rightHandPunchButton: {fileID: 1455291193}
   animator: {fileID: 1221010301}
+  audioPlayer: {fileID: 1660261263}
 --- !u!1 &1224495516
 GameObject:
   m_ObjectHideFlags: 0
@@ -2157,6 +2158,17 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 5077402171788905539, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
   m_PrefabInstance: {fileID: 6656069102727962653}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1660261263 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6837491624951303358, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
+  m_PrefabInstance: {fileID: 6656069102727962653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5581b68816627b468ba60a3b4b659d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1662732474 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5864635606446439878, guid: 02b4cce526cea7042a5dbcf75c4b6f25, type: 3}

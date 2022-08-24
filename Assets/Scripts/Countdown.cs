@@ -4,14 +4,26 @@ using UnityEngine;
 
 public class Countdown : MonoBehaviour
 {
+    public static Countdown Instance;
+
     [SerializeField] private TMPro.TMP_Text countdownText;
-    private byte num;
+    private int num;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void StartCountdown()
     {
         num = 11;
         CountdownAnimation();
-        countdownText.gameObject.SetActive(false);
+    }
+
+    public void StopCountdown()
+    {
+        countdownText.transform.DOKill();
+        countdownText.text = "";
     }
 
     private void CountdownAnimation()
@@ -27,7 +39,8 @@ public class Countdown : MonoBehaviour
         if(num == 0)
         {
             countdownText.transform.DOKill();
-            countdownText.gameObject.SetActive(false);
+            countdownText.text = "";
         }
-    }    
+    }
+
 }
