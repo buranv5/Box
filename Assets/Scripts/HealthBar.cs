@@ -11,7 +11,7 @@ public class HealthBar : MonoBehaviour
         bar.type = Image.Type.Filled;
     }
 
-    private void SetFillingAmount(float value)
+    public void SetFillingAmount(float value)
     {
         bar.fillAmount = value;
     }

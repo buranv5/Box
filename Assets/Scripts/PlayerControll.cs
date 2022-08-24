@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class PlayerControll : MonoBehaviour
 {
-    public Action<int> Punch;
-
     [SerializeField] private int damagePerPunch;
     [SerializeField] private int healthPoints;
+    [SerializeField] private HealthBar healthBar;
+    [SerializeField] private BotControll target;
     [SerializeField] private Button leftHandPunchButton; 
     [SerializeField] private Button rightHandPunchButton;
     [SerializeField] private Animator animator;
@@ -42,13 +42,13 @@ public class PlayerControll : MonoBehaviour
     private void LeftHandPunch()
     {
         animator.SetTrigger("RightPunch");
-        Punch?.Invoke(damagePerPunch);
+        target.Hitting(damagePerPunch);
     }
 
     private void RightHandPunch()
     {
         animator.SetTrigger("LeftPunch");
-        Punch?.Invoke(damagePerPunch);
+        target.Hitting(damagePerPunch);
     }
 
     private void Death()
