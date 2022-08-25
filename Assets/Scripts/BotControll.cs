@@ -2,21 +2,17 @@ using System;
 using UniRx;
 using UnityEngine;
 
-public class BotControll : MonoBehaviour
+public class BotControll : Boxer
 {
-    [SerializeField] private HealthBar healthBar;
     [SerializeField] private BoxerSettings data;
-    [SerializeField] private Animator animator;
-    [SerializeField] private PlayerControll target;
     
-    private int healthPoints;
-
     private IDisposable punchDisposable;
-    private BoxerState currentState;
 
     private void Awake()
     {
-        healthPoints = data.MaxHealthPoint;
+        damagePerPunch = data.DamagePerPunch;
+        maxHealthPoints = data.MaxHealthPoint;
+        healthPoints = maxHealthPoints;
         StartFight();
     }
 
@@ -26,33 +22,32 @@ public class BotControll : MonoBehaviour
         TimeSpan delay = TimeSpan.FromSeconds(data.PunchDelay);
         punchDisposable = Observable.Interval(delay).TakeUntilDisable(gameObject).Subscribe(_ =>
         {
-            Punching();
+            if(currentState == BoxerState.Fight)
+                Punch();
         });        
     }
 
-    public void Hitting(int damage)
+    public override void Hitting(int damage)
     {
-        if (UnityEngine.Random.value <= data.BlockChance || currentState != BoxerState.Fight)
-            return;
-
-        UpdateUI();
-
-        healthPoints -= damage;
-
-        if (healthPoints <= 0)
+        if(currentState != BoxerState.Fight)
         {
-            Death();
+            return;
         }
+
+        if (UnityEngine.Random.value <= data.BlockChance && currentState == BoxerState.Fight)
+        {
+            BlockHitting();
+            return;
+        }
+
+
+        Debug.Log(currentState);
+        base.Hitting(damage);
     }
 
-    private void UpdateUI()
+    protected override void Punch()
     {
-        healthBar.SetFillingAmount((float)healthPoints / (float)data.MaxHealthPoint);
-    }
-
-    private void Punching()
-    {
-        target.Hitting(data.DamagePerPunch);
+        base.Punch();
 
         if (UnityEngine.Random.Range(0, 2) == 0)
         {
@@ -64,18 +59,15 @@ public class BotControll : MonoBehaviour
         }
     }
 
-    private void Death()
+    protected override void Death()
     {
-        currentState = BoxerState.Knockdown;
-        UpdateUI();
         punchDisposable?.Dispose();
+        currentState = BoxerState.Knockdown;
         animator.SetTrigger("Knockdown");
-            Countdown.Instance.StartCountdown();
         if (UnityEngine.Random.value <= data.ReviveChance)        
             Observable.Timer(TimeSpan.FromSeconds(UnityEngine.Random.Range(0f, 10f))).TakeUntilDisable(gameObject).Subscribe(_ =>
             {
                 Revive();
-                Countdown.Instance.StopCountdown();
             });
         else        
             currentState = BoxerState.Dead;        

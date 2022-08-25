@@ -2,49 +2,21 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerControll : MonoBehaviour
+public class PlayerControll : Boxer
 {
-    [SerializeField] private int damagePerPunch;
-    [SerializeField] private int maxHealthPoints;
-    [SerializeField] private HealthBar healthBar;
-    [SerializeField] private BotControll target;
+    [SerializeField] private new int damagePerPunch;
+    [SerializeField] private new int maxHealthPoints;
     [SerializeField] private Button leftHandPunchButton; 
     [SerializeField] private Button rightHandPunchButton;
-    [SerializeField] private Animator animator;
-    [SerializeField] private AudioPlayer audioPlayer;
-
-    private BoxerState currentState;
-    private bool block;
-    private int healthPoints;
 
     private void Awake()
     {
+        base.damagePerPunch = this.damagePerPunch;
+        base.maxHealthPoints = this.maxHealthPoints;
         currentState = BoxerState.Fight;
         healthPoints = maxHealthPoints;
         leftHandPunchButton.onClick.AddListener(LeftHandPunch); 
         rightHandPunchButton.onClick.AddListener(RightHandPunch); 
-    }
-
-    public void Hitting(int damage)
-    {
-        animator.SetTrigger("TakeHit");
-
-        if (block || currentState != BoxerState.Fight)
-        {
-            audioPlayer.PlaySound(Clips.Block);
-            return;
-        }
-
-        healthPoints -= damage;
-
-        UpdateUI();
-
-        audioPlayer.PlaySound(Clips.Punch);
-
-        if (healthPoints <= 0)
-        {
-            Death();
-        }
     }
 
     public void ChangeBlockState(bool state)
@@ -53,32 +25,30 @@ public class PlayerControll : MonoBehaviour
         animator.SetBool("Block", block);
     }
 
+    public override void Hitting(int damage)
+    {
+        if (block || currentState != BoxerState.Fight)
+        {
+            BlockHitting();
+            return;
+        }
+
+        base.Hitting(damage);
+    }
+
     private void LeftHandPunch()
     {
+        if (currentState != BoxerState.Fight)
+            return;
         animator.SetTrigger("RightPunch");
         Punch();
     }
 
     private void RightHandPunch()
     {
+        if (currentState != BoxerState.Fight)
+            return;
         animator.SetTrigger("LeftPunch");
         Punch();
-    }
-
-    private void UpdateUI()
-    {
-        healthBar.SetFillingAmount((float)healthPoints / (float)maxHealthPoints);
-    }
-
-    private void Punch()
-    {
-        audioPlayer.PlaySound(Clips.Punch);
-        target.Hitting(damagePerPunch);
-    }
-
-    private void Death()
-    {
-        animator.SetTrigger("Knockdown");
-        currentState = BoxerState.Knockdown;
     }
 }

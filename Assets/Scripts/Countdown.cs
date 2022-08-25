@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class Countdown : MonoBehaviour
 {
-    public static Countdown Instance;
 
     [SerializeField] private TMPro.TMP_Text countdownText;
     private int num;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    public void StartCountdown()
+        public void StartCountdown()
     {
         num = 11;
         CountdownAnimation();
@@ -41,6 +34,8 @@ public class Countdown : MonoBehaviour
             countdownText.transform.DOKill();
             countdownText.text = "";
         }
+
+
     }
 
 }

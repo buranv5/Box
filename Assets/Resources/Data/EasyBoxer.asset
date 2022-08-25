@@ -15,5 +15,5 @@ MonoBehaviour:
   MaxHealthPoint: 100
   DamagePerPunch: 5
   PunchDelay: 2
+  ReviveChance: 0
   BlockChance: 0.33333334
-  ReviveChance: 0.785
