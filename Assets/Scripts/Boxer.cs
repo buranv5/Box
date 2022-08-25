@@ -45,7 +45,6 @@ public class Boxer : MonoBehaviour
     protected void BlockHitting()
     {
         animator.SetBool("Block", true);
-        animator.SetTrigger("TakeHit");
         animator.SetBool("Block", false);
         audioPlayer.PlaySound(Clips.Block);
     }
@@ -59,5 +58,6 @@ public class Boxer : MonoBehaviour
     {
         currentState = BoxerState.Knockdown;
         animator.SetTrigger("Knockdown");
+        Referee.Instance.TryStartCountdown();
     }
 }

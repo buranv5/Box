@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EasyBoxer
   m_EditorClassIdentifier: 
   MaxHealthPoint: 100
-  DamagePerPunch: 5
+  DamagePerPunch: 20
   PunchDelay: 2
-  ReviveChance: 0
+  ReviveChance: 0.2
   BlockChance: 0.33333334

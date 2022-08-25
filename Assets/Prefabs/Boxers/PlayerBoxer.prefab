@@ -558,7 +558,7 @@ MonoBehaviour:
   target: {fileID: 0}
   healthBar: {fileID: 0}
   audioPlayer: {fileID: 572051155309596462}
-  damagePerPunch: 20
+  damage: 20
   maxHealthPoints: 100
   leftHandPunchButton: {fileID: 0}
   rightHandPunchButton: {fileID: 0}
@@ -1267,6 +1267,18 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 2262352140531699667}
+    - target: {fileID: 6837491624951303358, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
+      propertyPath: clips.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6837491624951303358, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1b78d0d5e3ce9db4e8a4e7b0290ee735, type: 3}
+    - target: {fileID: 6837491624951303358, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
+      propertyPath: clips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: b2208c78300b8cc4bbe44ffc51f4f13d, type: 3}
     - target: {fileID: 8177765348370377147, guid: 8975f59b2e9841242bcc8b6a6b84dcf0, type: 3}
       propertyPath: m_Name
       value: AudioPlayer

@@ -4,19 +4,20 @@ using UnityEngine.UI;
 
 public class PlayerControll : Boxer
 {
-    [SerializeField] private new int damagePerPunch;
+    [SerializeField] private int damage;
     [SerializeField] private new int maxHealthPoints;
     [SerializeField] private Button leftHandPunchButton; 
     [SerializeField] private Button rightHandPunchButton;
 
     private void Awake()
     {
-        base.damagePerPunch = this.damagePerPunch;
+        damagePerPunch = damage;
         base.maxHealthPoints = this.maxHealthPoints;
         currentState = BoxerState.Fight;
         healthPoints = maxHealthPoints;
         leftHandPunchButton.onClick.AddListener(LeftHandPunch); 
-        rightHandPunchButton.onClick.AddListener(RightHandPunch); 
+        rightHandPunchButton.onClick.AddListener(RightHandPunch);
+        Referee.Instance.AddBoxer(this);
     }
 
     public void ChangeBlockState(bool state)

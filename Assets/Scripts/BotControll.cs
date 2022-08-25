@@ -14,6 +14,7 @@ public class BotControll : Boxer
         maxHealthPoints = data.MaxHealthPoint;
         healthPoints = maxHealthPoints;
         StartFight();
+        Referee.Instance.AddBoxer(this);
     }
 
     private void StartFight()
@@ -40,13 +41,14 @@ public class BotControll : Boxer
             return;
         }
 
-
-        Debug.Log(currentState);
         base.Hitting(damage);
     }
 
     protected override void Punch()
     {
+        if (target.CurrentState != BoxerState.Fight)
+            return;
+
         base.Punch();
 
         if (UnityEngine.Random.Range(0, 2) == 0)
@@ -61,9 +63,8 @@ public class BotControll : Boxer
 
     protected override void Death()
     {
+        base.Death();
         punchDisposable?.Dispose();
-        currentState = BoxerState.Knockdown;
-        animator.SetTrigger("Knockdown");
         if (UnityEngine.Random.value <= data.ReviveChance)        
             Observable.Timer(TimeSpan.FromSeconds(UnityEngine.Random.Range(0f, 10f))).TakeUntilDisable(gameObject).Subscribe(_ =>
             {
@@ -79,5 +80,6 @@ public class BotControll : Boxer
         StartFight();
         healthPoints = (int)Math.Round(data.MaxHealthPoint * 0.75f);
         UpdateUI();
+        Referee.Instance.TryStopCountdown();
     }
 }

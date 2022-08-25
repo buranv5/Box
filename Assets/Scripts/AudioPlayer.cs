@@ -19,4 +19,6 @@ public enum Clips
     Background,
     Block,
     Punch,
+    Win,
+    Lose,
 }
