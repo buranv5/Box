@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
 
 public class Referee : MonoBehaviour
@@ -11,8 +10,7 @@ public class Referee : MonoBehaviour
     [SerializeField] private Countdown countdown;
     [SerializeField] private AudioPlayer audioPlayer;
     [SerializeField] private PlayerControll player;
-
-    private List<Boxer> boxers = new List<Boxer>();
+    [SerializeField] private BotControll opponent;
 
     public static Referee Instance;
 
@@ -21,41 +19,15 @@ public class Referee : MonoBehaviour
         Instance = this;
     }
 
-    public void AddBoxer(Boxer newBoxer)
-    {
-        foreach (Boxer boxer in boxers)
-        {
-            if (boxer == newBoxer)
-                return;
-        }
-        boxers.Add(newBoxer);
-    }
-
     public void TryStartCountdown()
     {
-        int boxersInFight = 0;
-        foreach(Boxer boxer in boxers)
-        {
-            if (boxer.CurrentState == BoxerState.Fight)
-                boxersInFight++;
-        }
-
-        if (boxersInFight > 1)
-            return;
-
-        countdown.StartCountdown(() => WinDetection(player.CurrentState == BoxerState.Fight));
+        if(opponent.CurrentState != player.CurrentState)
+            countdown.StartCountdown(() => WinDetection(player.CurrentState == BoxerState.Fight));
     }
     
     public void TryStopCountdown()
     {
-        int boxersInFight = 0;
-        foreach (Boxer boxer in boxers)
-        {
-            if (boxer.CurrentState == BoxerState.Fight)
-                boxersInFight++;
-        }
-
-        if (boxersInFight > 1)
+        if(opponent.CurrentState == BoxerState.Fight)
             countdown.StopCountdown();   
     }
 
@@ -71,5 +43,6 @@ public class Referee : MonoBehaviour
             infoText.text = LOSE_TEXT;
             audioPlayer.PlaySound(Clips.Lose);
         }
+        Observable.Timer(System.TimeSpan.FromSeconds(0.5)).TakeUntilDisable(gameObject).Subscribe(_ => UnityEngine.SceneManagement.SceneManager.LoadScene(0));
     }
 }

@@ -14,7 +14,12 @@ public class BotControll : Boxer
         maxHealthPoints = data.MaxHealthPoint;
         healthPoints = maxHealthPoints;
         StartFight();
-        Referee.Instance.AddBoxer(this);
+    }
+
+    public void SetBoxerSettings(BoxerSettings settings)
+    {
+        data = settings;
+        Awake();
     }
 
     private void StartFight()
@@ -79,7 +84,7 @@ public class BotControll : Boxer
         animator.SetTrigger("Getup");
         StartFight();
         healthPoints = (int)Math.Round(data.MaxHealthPoint * 0.75f);
-        UpdateUI();
+        OnDamageTaken?.Invoke((float)healthPoints / (float)maxHealthPoints);
         Referee.Instance.TryStopCountdown();
     }
 }

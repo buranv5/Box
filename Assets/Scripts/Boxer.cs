@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Boxer : MonoBehaviour
 {
     [SerializeField] protected Animator animator;
     [SerializeField] protected Boxer target;
-    [SerializeField] protected HealthBar healthBar;
     [SerializeField] protected AudioPlayer audioPlayer;
 
     protected BoxerState currentState;
@@ -16,6 +14,8 @@ public class Boxer : MonoBehaviour
     protected int maxHealthPoints;
     protected int healthPoints;
     protected int damagePerPunch;
+
+    public Action<float> OnDamageTaken;
 
     public BoxerState CurrentState => currentState;
 
@@ -27,12 +27,11 @@ public class Boxer : MonoBehaviour
 
     public virtual void Hitting(int damage)
     {
-
         healthPoints -= damage;
 
-        UpdateUI();
-
         audioPlayer.PlaySound(Clips.Punch);
+
+        OnDamageTaken?.Invoke((float)healthPoints / (float)maxHealthPoints);
 
         if (healthPoints <= 0)
         {
@@ -47,11 +46,6 @@ public class Boxer : MonoBehaviour
         animator.SetBool("Block", true);
         animator.SetBool("Block", false);
         audioPlayer.PlaySound(Clips.Block);
-    }
-
-    protected void UpdateUI()
-    {
-        healthBar.SetFillingAmount((float)healthPoints / (float)maxHealthPoints);
     }
 
     protected virtual void Death()

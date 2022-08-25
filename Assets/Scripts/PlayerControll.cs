@@ -17,7 +17,6 @@ public class PlayerControll : Boxer
         healthPoints = maxHealthPoints;
         leftHandPunchButton.onClick.AddListener(LeftHandPunch); 
         rightHandPunchButton.onClick.AddListener(RightHandPunch);
-        Referee.Instance.AddBoxer(this);
     }
 
     public void ChangeBlockState(bool state)
