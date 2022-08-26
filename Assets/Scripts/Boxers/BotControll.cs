@@ -58,11 +58,11 @@ public class BotControll : Boxer
 
         if (UnityEngine.Random.Range(0, 2) == 0)
         {
-            animator.SetTrigger("RightPunch");
+            animator.RightHandPunch();
         }
         else
         {
-            animator.SetTrigger("LeftPunch");
+            animator.LeftHandPunch();
         }
     }
 
@@ -81,7 +81,7 @@ public class BotControll : Boxer
 
     private void Revive()
     {
-        animator.SetTrigger("Getup");
+        animator.Getup();
         StartFight();
         healthPoints = (int)Math.Round(data.MaxHealthPoint * 0.75f);
         OnDamageTaken?.Invoke((float)healthPoints / (float)maxHealthPoints);

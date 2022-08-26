@@ -4,10 +4,9 @@ using UnityEngine.UI;
 
 public class PlayerControll : Boxer
 {
+    [SerializeField] private ButtonsInput buttonsInput;
     [SerializeField] private int damage;
     [SerializeField] private new int maxHealthPoints;
-    [SerializeField] private Button leftHandPunchButton; 
-    [SerializeField] private Button rightHandPunchButton;
 
     private void Awake()
     {
@@ -15,14 +14,14 @@ public class PlayerControll : Boxer
         base.maxHealthPoints = this.maxHealthPoints;
         currentState = BoxerState.Fight;
         healthPoints = maxHealthPoints;
-        leftHandPunchButton.onClick.AddListener(LeftHandPunch); 
-        rightHandPunchButton.onClick.AddListener(RightHandPunch);
+        buttonsInput.OnBlockButtonChangeState += ChangeBlockState;
+        buttonsInput.OnLeftHandPunchButtonClicked += LeftHandPunch;
+        buttonsInput.OnRightHandPunchButtonClicked += RightHandPunch;
     }
 
     public void ChangeBlockState(bool state)
     {
         block = state;
-        animator.SetBool("Block", block);
     }
 
     public override void Hitting(int damage)
@@ -40,7 +39,7 @@ public class PlayerControll : Boxer
     {
         if (currentState != BoxerState.Fight)
             return;
-        animator.SetTrigger("RightPunch");
+        animator.LeftHandPunch();
         Punch();
     }
 
@@ -48,7 +47,7 @@ public class PlayerControll : Boxer
     {
         if (currentState != BoxerState.Fight)
             return;
-        animator.SetTrigger("LeftPunch");
+        animator.RightHandPunch();
         Punch();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Boxer : MonoBehaviour
 {
-    [SerializeField] protected Animator animator;
+    [SerializeField] protected BoxerAnimator animator;
     [SerializeField] protected Boxer target;
     [SerializeField] protected AudioPlayer audioPlayer;
 
@@ -38,20 +38,18 @@ public class Boxer : MonoBehaviour
             Death();
             return;
         }
-        animator.SetTrigger("TakeHit");
+        animator.TakeHit();
     }
 
     protected void BlockHitting()
     {
-        animator.SetBool("Block", true);
-        animator.SetBool("Block", false);
         audioPlayer.PlaySound(Clips.Block);
     }
 
     protected virtual void Death()
     {
         currentState = BoxerState.Knockdown;
-        animator.SetTrigger("Knockdown");
+        animator.Knockdown();
         Referee.Instance.TryStartCountdown();
     }
 }
